@@ -13,8 +13,10 @@ Resume ResumeParserPipeline::parseFile(const std::string &filepath) {
 
   auto normalized_text_blocks =
       ResumeParser::Preprocessor::normalize(text_blocks);
+  auto filtered_text_blocks =
+      ResumeParser::Preprocessor::filterNoise(normalized_text_blocks);
   auto processed_content =
-      ResumeParser::Preprocessor::mergeLine(normalized_text_blocks);
+      ResumeParser::Preprocessor::mergeLine(filtered_text_blocks);
   auto processed_lines =
       ResumeParser::Preprocessor::buildBlocks(processed_content);
   auto classified_block =

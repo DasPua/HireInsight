@@ -19,6 +19,7 @@ private:
   extractExperience(const std::vector<Line> &lines);
   static std::vector<std::string> extractSkills(const std::vector<Line> &lines);
   static std::vector<Project> extractProjects(const std::vector<Line> &lines);
+  static std::vector<OtherSection> extractOther(const std::vector<Line> &lines);
 
   static std::string extractEmail(const std::string &text);
   static std::string extractPhone(const std::string &text);

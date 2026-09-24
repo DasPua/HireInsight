@@ -1,6 +1,7 @@
 #include "ResumeParser/Preprocessor/Preprocessor.h"
 #include "ResumeParser/SectionClassifer/SectionClassifer.h"
 #include <algorithm>
+#include <unordered_set>
 
 namespace ResumeParser {
 std::string Preprocessor::remove_whitespace(const std::string &text) {
@@ -122,6 +123,27 @@ Preprocessor::mergeLine(const std::vector<TextBlock> &blocks) {
   bool hasLineId = blocks[0].lineId != -1;
 
   return hasLineId ? mergeByLineId(blocks) : mergeByPosition(blocks);
+}
+
+std::vector<TextBlock>
+Preprocessor::filterNoise(const std::vector<TextBlock> &blocks) {
+  static const std::unordered_set<std::string> noiseTokens = {"Link", "|", "–",
+                                                              "-"};
+
+  std::vector<TextBlock> result;
+  result.reserve(blocks.size());
+
+  for (const auto &block : blocks) {
+    const std::string text = remove_whitespace(block.text);
+
+    if (noiseTokens.find(text) != noiseTokens.end()) {
+      continue;
+    }
+
+    result.push_back(block);
+  }
+
+  return result;
 }
 
 std::vector<std::vector<Line>>

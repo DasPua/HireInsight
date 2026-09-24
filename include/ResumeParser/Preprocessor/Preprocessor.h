@@ -10,9 +10,9 @@ class Preprocessor {
 
 public:
   static std::vector<TextBlock> normalize(const std::vector<TextBlock> &blocks);
-
+  static std::vector<TextBlock>
+  filterNoise(const std::vector<TextBlock> &blocks);
   static std::vector<Line> mergeLine(const std::vector<TextBlock> &blocks);
-
   static std::vector<std::vector<Line>>
   buildBlocks(const std::vector<Line> &Lines);
 
